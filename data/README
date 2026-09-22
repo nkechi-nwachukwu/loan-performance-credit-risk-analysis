@@ -1,0 +1,44 @@
+# 📂 Data
+
+This folder is reserved for the dataset used in the **Loan Performance & Credit Risk Analysis** project.
+
+## Dataset
+
+The analysis uses a Lending Club loan dataset containing **10,000+ loan records** with borrower, financial, and loan-level information.
+
+Key fields include:
+
+* Loan Amount
+* Income
+* Credit Grade
+* Interest Rate
+* Loan Term
+* Debt-to-Income Ratio
+* Loan Purpose
+* Loan Status
+* Default Status
+* Geographic Information
+* Repayment Information
+
+## Data Source
+
+The dataset was sourced from Lending Club.
+
+The original dataset is not included in this repository.
+
+Users who want to reproduce the analysis should obtain the appropriate dataset from its original source and place it in this directory.
+
+## Data Preparation
+
+The dataset was prepared for analysis by:
+
+* Handling missing values
+* Standardizing data formats
+* Reviewing duplicate records
+* Cleaning financial fields
+* Preparing categorical variables
+* Creating analytical fields for risk and profitability analysis
+
+The cleaned data was subsequently analyzed using SQL and Microsoft Excel.
+
+> **Note:** Dataset availability and licensing may vary depending on the source.
