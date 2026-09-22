@@ -386,15 +386,19 @@ The Excel dashboard provides a consolidated view of:
 ### Default Rate vs Interest Rate
 
 <img width="303" height="224" alt="interest rate" src="https://github.com/user-attachments/assets/105b1675-d067-42ea-9443-d89f52d95d8c" />
+
 ### Loan Exposure by Status
 
 <img width="297" height="359" alt="loan exposure" src="https://github.com/user-attachments/assets/350c5d77-e0d7-4aed-9fd6-e0302e14fe81" />
+
 ### Net Returns by Loan Grade
 
 <img width="274" height="357" alt="net returns" src="https://github.com/user-attachments/assets/b0cfcd43-911b-46fb-901a-3694fb4283ad" />
+
 ### Portfolio KPIs
 
 <img width="189" height="517" alt="kpi" src="https://github.com/user-attachments/assets/f0eb224b-adef-4f61-9b33-5f1a07f15cac" />
+
 ### Borrower Profile
 
 <img width="529" height="499" alt="borrowers profile" src="https://github.com/user-attachments/assets/a393074a-54ec-4e9d-b4b2-f36cab00748a" />
@@ -461,8 +465,8 @@ The complete Excel workflow includes:
 * Interactive reporting
 
 **🔗 [Explore the Full Excel Workflow]**
-https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48pLnmQ?e=iF40NT
----
+**https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48pLnmQ?e=iF40NT
+**---
 
 # 🚀 Business Outcome
 
