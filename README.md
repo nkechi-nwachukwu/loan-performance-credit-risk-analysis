@@ -27,6 +27,11 @@ The analysis demonstrates how **SQL and Excel-based reporting** can be used to m
 
 ---
 
+## Dashboard Overview
+<img width="1800" height="1200" alt="Loan Performance Mockup " src="https://github.com/user-attachments/assets/7be67bd7-ebfb-469a-9798-b2c5d9cb5934" />
+
+---
+
 ## 🎯 Business Problem
 
 The lending portfolio showed significant growth in loan disbursements, but increasing defaults and negative returns created concerns around portfolio risk and profitability.
@@ -459,7 +464,7 @@ The complete Excel workflow includes:
 * Profitability analysis
 * Interactive reporting
 
-**🔗 [Explore the Full Excel Workflow](https://1drv.ms/x/c/6c87140a9abfc95f/IQArbGNoYTxVQISenBv8MjnyAQ9sD4Gdgoa4PMgnB9U5ZMI?e=LncSXZ)**
+**🔗 [Explore the Full Excel Workflow]([https://1drv.ms/x/c/6c87140a9abfc95f/IQArbGNoYTxVQISenBv8MjnyAQ9sD4Gdgoa4PMgnB9U5ZMI?e=LncSXZ](https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48pLnmQ?e=iF40NT))**
 
 ---
 
