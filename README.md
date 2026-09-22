@@ -372,7 +372,8 @@ The Excel dashboard provides a consolidated view of:
 
 ### Dashboard Preview
 
-![Portfolio Health Dashboard](images/portfolio-health-dashboard.png)
+<img width="1161" height="654" alt="credit risk dashboard" src="https://github.com/user-attachments/assets/8b89f63e-02a0-42b1-b1e2-642a322c4157" />
+
 
 ---
 
@@ -380,28 +381,23 @@ The Excel dashboard provides a consolidated view of:
 
 ### Portfolio Health Dashboard
 
-![Dashboard Overview](images/dashboard-overview.png)
+<img width="1141" height="638" alt="porfolio health dashboard" src="https://github.com/user-attachments/assets/986bd2c9-7565-4678-a7e1-99e490c9cdf8" />
 
 ### Default Rate vs Interest Rate
 
-![Default Rate vs Interest Rate](images/default-rate-vs-interest-rate.png)
-
+<img width="303" height="224" alt="interest rate" src="https://github.com/user-attachments/assets/105b1675-d067-42ea-9443-d89f52d95d8c" />
 ### Loan Exposure by Status
 
-![Loan Exposure by Status](images/loan-exposure-by-status.png)
-
+<img width="297" height="359" alt="loan exposure" src="https://github.com/user-attachments/assets/350c5d77-e0d7-4aed-9fd6-e0302e14fe81" />
 ### Net Returns by Loan Grade
 
-![Net Returns by Loan Grade](images/net-returns-by-loan-grade.png)
-
+<img width="274" height="357" alt="net returns" src="https://github.com/user-attachments/assets/b0cfcd43-911b-46fb-901a-3694fb4283ad" />
 ### Portfolio KPIs
 
-![Portfolio KPIs](images/kpis.png)
-
+<img width="189" height="517" alt="kpi" src="https://github.com/user-attachments/assets/f0eb224b-adef-4f61-9b33-5f1a07f15cac" />
 ### Borrower Profile
 
-![Borrower Profile](images/borrower-profile.png)
-
+<img width="529" height="499" alt="borrowers profile" src="https://github.com/user-attachments/assets/a393074a-54ec-4e9d-b4b2-f36cab00748a" />
 ---
 
 # 📁 Repository Structure
@@ -464,8 +460,8 @@ The complete Excel workflow includes:
 * Profitability analysis
 * Interactive reporting
 
-**🔗 [Explore the Full Excel Workflow]([https://1drv.ms/x/c/6c87140a9abfc95f/IQArbGNoYTxVQISenBv8MjnyAQ9sD4Gdgoa4PMgnB9U5ZMI?e=LncSXZ](https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48pLnmQ?e=iF40NT))**
-
+**🔗 [Explore the Full Excel Workflow]**
+https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48pLnmQ?e=iF40NT
 ---
 
 # 🚀 Business Outcome
@@ -522,7 +518,7 @@ https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48p
 
 **Nkechi Nwachukwu**
 
-Data Analyst | Reporting & Business Intelligence
+**Data Analyst | Reporting & Business Intelligence**
 
 Focused on transforming raw data into clear reports, dashboards, and actionable business insights using **SQL, Power BI, Excel, Tableau, and AI tools**.
 
@@ -531,6 +527,7 @@ Portfolio: https://dorothy-data-portfolio.lovable.app
 GitHub: https://github.com/nkechi-nwachukwu
 
 LinkedIn: https://linkedin.com/in/nkechi-nwachukwu-82ba911bb
+
 ---
 
 ⭐ If you found this project useful, feel free to explore the repository and connect with me.
