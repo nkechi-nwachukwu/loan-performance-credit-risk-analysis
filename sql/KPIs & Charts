@@ -1,0 +1,257 @@
+Create View charged_off_rate As
+Select 
+(SUM(CASE
+		When loan_status = 'Charged Off' THEN 1 ELSE 0 
+        END)/count(*)) AS Default_rate
+        From loan_data;
+
+Create View delinquency_rate As
+Select 
+(SUM(CASE
+		When loan_status IN ('In Grace Period','Late (16-30 days)','Late (31-120 days)') THEN 1 ELSE 0 
+        END)/count(*)) AS Delinquency_rate
+        From loan_data;
+
+Create View current_portfolio As
+Select 
+(SUM(CASE
+		When loan_status = 'Current' THEN 1 ELSE 0 
+        END)/count(*)) AS Current_loan
+        From loan_data;
+        
+Create View Good_Loans As
+Select Round(
+(SUM(CASE
+		When loan_status IN ('Current', 'Fully Paid') THEN 1 ELSE 0 
+        END)/count(*)),2) AS Good_Loans
+        From loan_data;
+        
+Create View At_Risk_Exposure As
+Select Round(
+(SUM(CASE
+		When loan_status = 'In Grace Period' THEN loan_amount ELSE 0 
+        END))/sum(loan_amount),4) AS At_Risk_Exposure
+        From loan_data;
+      
+   Create View High_Risk_Exposure As
+Select Round(
+(SUM(CASE
+		When loan_status IN ('Late (31-120 days)', 'Charged Off') THEN loan_amount ELSE 0 
+        END))/sum(loan_amount),4) AS High_Risk_Exposure
+        From loan_data;   
+      
+Create View high_Risk_Loan As
+Select 
+(SUM(CASE
+		When loan_status IN ('Late (31-120 days)', 'Charged Off') THEN 1 ELSE 0 
+        END)/count(*)) AS high_Risk_Loan
+        From loan_data;
+ 
+ Create View Average_Risk_Score As
+Select 
+Round(Avg(risk_score),2) AS Average_Risk_Score
+        From loan_data;
+
+Create View early_warning_pool As
+Select Round(
+(SUM(CASE
+		When loan_status IN ('In Grace Period','Late (16-30 days)') THEN loan_amount ELSE 0 
+        END))/sum(loan_amount),4) AS early_warning_pool
+FROM loan_data;
+
+Create View Monthly_Loan_Growth As
+Select  month_key, year, month_num, month_name, total_loans,
+		LAG(total_loans) OVER (Order by year, month_num) AS previous_month_loans,
+		Round((total_loans-LAG(total_loans) OVER (Order by year, month_num))/
+		LAG(total_loans) OVER (Order by year, month_num), 4) As monthly_loan_growth_pct
+From (
+Select
+		month_key, year, month_num, month_name,
+		Count(l.grade) AS total_loans
+From loan_data l
+Join month m
+ON Date_Format(STR_TO_DATE(l.issue_month, '%m/%d/%Y'),'%Y-%m')= month_key
+Group by  month_key, year, month_num, month_name) AS Monthly_Loans;
+
+Create View active_loan_count As
+Select 
+Count(CASE
+		When loan_status = 'Current' THEN 1 END) AS active_loan
+From loan_data;
+
+Create View monthly_loan_trend As
+Select 
+		Date_Format(STR_TO_DATE(issue_month, '%m/%d/%Y'),'%b') AS month_name,
+	   MONTH(STR_TO_DATE(issue_month, '%m/%d/%Y')) AS month_num,
+       Count(grade) AS total_loan, sum(loan_amount) AS exposure_amount
+From loan_data
+Group by month_name, month_num
+Order by month_num;
+
+Create View borrower_profile As
+Select income_band, dti_band,count(*) AS loan_count
+From( Select
+Case
+	When annual_income <50000 THEN 'Low income'
+	When annual_income <100000 THEN 'Medium income'
+    Else 'High income'
+END AS income_band,
+Case
+	When debt_to_income < 20 THEN 'Low DTI'
+	When debt_to_income < 35 THEN 'Medium DTI'
+    Else 'High DTI'
+END AS dti_band
+    From loan_data) AS borrower_segments
+    Group by income_band, dti_band;
+
+Create View Net_Returns As
+Select 
+	Round(Sum(paid_total-loan_amount),2)
+    +
+    Sum(Case
+			When loan_status = 'Charged Off'
+			Then loan_amount - paid_total Else 0 END)
+			AS net_returns
+FROM loan_data;
+
+Create View Net_Returns_Margin As
+Select 
+	Round((
+    (Sum(paid_total-loan_amount)
+    +
+    Sum(Case
+			When loan_status = 'Charged Off'
+			Then loan_amount - paid_total Else 0 END)))
+/
+NULLIF(
+	Sum(paid_total - loan_amount),0),4) AS net_retun_margin
+FROM loan_data;
+
+
+Create View Net_Returns_by_loan_grade As
+Select grade,
+	Round(Sum(paid_total-loan_amount),2)
+    +
+    Sum(Case
+			When loan_status = 'Charged Off'
+			Then loan_amount - paid_total Else 0 END)
+			AS net_returns_by_loan_grade
+FROM loan_data
+Group by grade
+Order by net_returns_by_loan_grade desc;
+
+Create View Total_Interest_Income As
+Select 
+Round(Sum(paid_total-loan_amount),2)
+AS Total_Interest_Income
+FROM loan_data;
+
+Create View Revenue_vs_Loss As
+Select 
+Round(Sum(paid_total-loan_amount),2)
+AS Total_Interest_Income,
+Round(
+    Sum(Case
+			When loan_status = 'Charged Off'
+			Then loan_amount - paid_total Else 0 END),2)
+			AS Chargedoff_Loss
+FROM loan_data;
+
+Create View Total_Net_Loss As
+Select 
+	Round(
+    Sum(Case
+			When loan_status = 'Charged Off'
+			Then loan_amount - paid_total Else 0 END),2)
+			AS Total_Net_Loss
+FROM loan_data;
+
+Create View ROI_per_loan As
+Select 
+Round(
+		Sum(paid_total - loan_amount)
+		/ 
+NULLIF(sum(loan_amount),0),2) AS ROI_pct
+FROM loan_data;
+
+Create View Recovery_Rate As
+SELECT 
+	Round(
+		 Sum(Case
+				When loan_status = 'Charged Off'
+			Then paid_total ELSE 0 END)
+            /
+	NULLIF(
+		Sum(Case
+				When loan_status = 'Charged Off'
+				Then loan_amount ELSE 0 END),0
+                ),4) AS recovery_rate
+FROM loan_data;
+Create View Recovery_Rate_by_Grade As
+SELECT grade,
+	Round(
+		 Sum(Case
+				When loan_status = 'Charged Off'
+			Then paid_total ELSE 0 END)
+            /
+	NULLIF(
+		Sum(Case
+				When loan_status = 'Charged Off'
+				Then loan_amount ELSE 0 END),0
+                ),4) AS recovery_rate_pct
+FROM loan_data
+Group by grade
+Order by recovery_rate_pct desc ;
+
+Create View int_rate_vs_def_rate As
+SELECT  
+		Round(avg(interest_rate),2) AS avg_interest_rate,
+		Round(
+		 Sum(Case 		
+				When loan_status = 'Charged Off' THEN 1 ELSE 0 
+                END)/count(*),4) AS default_rate
+    FROM loan_data;
+    
+ Create View porfolio_health As
+Select 
+	 CASE
+		When loan_status IN ('Current','Fully Paid') THEN 'Good'
+        When loan_status = 'In Grace Period' THEN 'At-Risk'
+        ELSE 'High-Risk'
+        END AS porfolio_health,
+        Count(*) As Total_loans,
+        Round(sum(loan_amount),2) AS exposure_amount
+        From loan_data
+        Group by loan_status;
+
+	Create View exposure_at_risk As
+Select loan_status, Round(sum(loan_amount),2) AS exposure_at_risk
+From loan_data
+Where loan_status IN ('In Grace Period','Late (16-30 days)','Late (31-120 days)','Charged Off')
+        Group by loan_status
+        Order by exposure_at_risk desc;
+        
+ Create View vintage_analysis As
+Select Date_Format(STR_TO_DATE(issue_month, '%m/%d/%Y'),'%b') AS month_name,
+	   MONTH(STR_TO_DATE(issue_month, '%m/%d/%Y')) AS month_num,
+       count(*) AS total_loans,
+				Sum(Case
+					When loan_status = 'Charged Off' THEN 1 ELSE 0 END) AS defaults,
+                    Round((
+							Sum(Case
+									When loan_status = 'Charged Off' THEN 1 ELSE 0 END)
+					)/Count(*),4) AS default_rate
+FROM loan_data
+Group by  month_name, month_num
+Order by month_num;
+
+Create View early_warning_indicators As
+Select Date_Format(STR_TO_DATE(issue_month, '%m/%d/%Y'),'%b') AS month_name,
+	   MONTH(STR_TO_DATE(issue_month, '%m/%d/%Y')) AS month_num,
+				Sum(Case
+					When loan_status IN ('In Grace Period','Late (16-30 days)',
+                    'Late (31-120 days)') THEN 1 ELSE 0
+                    END) AS delinquent_loans
+FROM loan_data
+Group by month_name, month_num
+Order by month_num;
