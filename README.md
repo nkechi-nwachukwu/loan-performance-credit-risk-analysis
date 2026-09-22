@@ -465,8 +465,11 @@ The complete Excel workflow includes:
 * Interactive reporting
 
 **🔗 [Explore the Full Excel Workflow]**
-**https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48pLnmQ?e=iF40NT
-**---
+
+https://1drv.ms/x/c/6c87140a9abfc95f/IQCAQPOdxX7mRqtwOZ1M79fXAf4dhiR0gGe_4xHG48pLnmQ?e=iF40NT
+
+
+---
 
 # 🚀 Business Outcome
 
