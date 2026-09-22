@@ -1,0 +1,99 @@
+Create View risk_band As
+Select loan_status,
+Case
+	When loan_status IN ('Current','Fully Paid') THEN 'Low Risk'
+	When loan_status IN ('In Grace Period','Late (16-30 days)') THEN 'Medium Risk'
+	When loan_status IN ('Late (31-120 days)','Charged Off') THEN 'High Risk'
+ELSE 'Other'
+END AS risk_band,
+Count(*) As borrower_count,
+Sum(loan_amount) AS exposure_amount
+From loan_data
+Group by risk_band, loan_status
+Order by exposure_amount desc;
+
+Create View state AS
+Select Distinct state
+From loan_data;
+
+Create View purpose As
+Select Distinct loan_purpose
+From loan_data;
+
+Create View income_band As
+Select Distinct annual_income,
+Case 
+	When annual_income <50000 THEN 'Low income'
+	When annual_income <100000 THEN 'Medium income'
+    Else 'High income'
+END AS income_band
+From loan_data;
+
+Create View dti_band As
+Select 'Low Risk' AS dti_band
+UNION
+Select 'Medium Risk'
+UNION
+Select 'High Risk'
+UNION
+Select 'Unknown';
+
+Create View month As
+Select Distinct Date_Format(
+							STR_TO_DATE(issue_month,'%m/%d/%Y'),'%Y-%m') AS month_key,
+							YEAR(STR_TO_DATE(issue_month,'%m/%d/%Y')) AS year,
+							MONTH(STR_TO_DATE(issue_month,'%m/%d/%Y')) AS month_num,
+							MONTHNAME(STR_TO_DATE(issue_month, '%m/%d/%Y')) AS month_name
+FROM loan_data; 
+
+Create View credit_grade As
+Select Distinct grade
+From loan_data;
+
+CREATE VIEW risk_stage AS
+Select Case
+			When loan_status = 'Current' THEN 'Current'
+			When loan_status = 'In Grace Period' THEN 'Grace Period'
+			When loan_status = 'Late (16-30 days)' THEN '16-30 Days Late'
+			When loan_status = 'Late (31-120 days)' THEN '31-120 Days Late'
+			When loan_status = 'Charged Off' THEN 'Charged Off'
+			When loan_status = 'Fully Paid' THEN 'Fully Paid'
+END AS loan_status,
+        Count(*) AS loan_count,
+		Sum(loan_amount) AS exposure
+        From loan_data
+        Group by loan_status;
+
+CREATE VIEW default_grade AS
+Select grade,count(*) AS total_loans,
+SUM(CASE
+		When loan_status = 'Charged Off' THEN 1 ELSE 0 
+        END) AS defaulted_loans,
+SUM(CASE
+		When loan_status = 'Charged Off' THEN 1 ELSE 0 
+        END) * 1.0/ count(*) AS default_rate
+From loan_data
+Group by grade;
+
+CREATE VIEW state_risk AS
+Select state, count(*) AS total_loans,
+			SUM(loan_amount) AS exposure,
+            SUM(Case
+					When loan_status = 'Charged Off' THEN 1 ELSE 0
+            END)* 1.0/ count(*) As default_rate
+From loan_data
+Group by state;
+
+CREATE VIEW purpose_risk AS
+Select loan_purpose, count(*) AS total_loans,
+Sum(loan_amount) AS total_exposure,
+Sum(Case
+		When loan_status = 'Charged Off' THEN loan_amount - paid_total ELSE 0
+        END) AS total_loss,
+Sum(Case
+		When loan_status = 'Charged Off' THEN 1 ELSE 0
+        END)* 1.0/ count(*) AS default_rate
+From loan_data
+Group by loan_purpose
+Order by total_loss desc;
+
